@@ -1,13 +1,14 @@
 import React from 'react';
+import IRepo from '../types/repo'
 
-interface IRepo {
-    repo: string
+interface RepoListProps {
+    repos: Array<IRepo>
 }
 
-const RepoList = ({repo}:IRepo ) => {
+const RepoList: React.FC<RepoListProps> = ({repos}) => {
     return (
         <div>
-            {repo}
+            {repos.map((repo) => <div>{repo.name}</div>)}
         </div>
     )
 };
