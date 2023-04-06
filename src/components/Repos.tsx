@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography} from '@mui/material';
 import RepoList from './RepoList';
 import IRepos from '../types/repo';
 
@@ -40,7 +40,6 @@ const Main: React.FC = () => {
             <div>
                 <Button>Search</Button>
             </div>
-            {repos.length}
             <RepoList repos={repos} />
         </div>
     )

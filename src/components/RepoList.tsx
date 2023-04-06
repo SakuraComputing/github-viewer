@@ -7,8 +7,16 @@ interface RepoListProps {
 
 const RepoList: React.FC<RepoListProps> = ({repos}) => {
     return (
-        <div>
-            {repos.map((repo) => <div>{repo.name}</div>)}
+        <div className='list-container'>
+            {repos.map((repo) => {
+                return (
+                    <div className='wrapper'>
+                        <div>{repo.name}</div>
+                        <div>{repo.stars}</div>
+                        <div>{repo.forks}</div>
+                    </div>
+                )
+            })}
         </div>
     )
 };
