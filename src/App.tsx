@@ -1,11 +1,10 @@
 import React from 'react';
-import Main from './components/Main';
-import Header from './components/Header'
+import Repos from './components/Repos';
 
 const App: React.FC = () => {
   return (
     <div className='container'>
-      <Header />
+      <Repos />
     </div>
   );
 }
