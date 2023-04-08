@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { TextField, Button, Typography} from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Stack} from '@mui/material';
 import RepoList from './RepoList';
-import IRepos from '../types/repo';
+import useFetch from '../Hooks/useFetch';
 
 const Main: React.FC = () => {
 
-    const [ repoName, setRepoName ] = useState('nodejs');
-    const [ repos, setRepos ] = useState<Array<IRepos>>([]);
+    const [ repoName, setRepoName ] = useState('');
+    const [ searchText, setSearchText] = useState('');
 
-    useEffect(() => {
-        fetch(`https://api.github.com/users/${repoName}/repos`)
-        .then(response => response.json())
-        .then(repos => {
-            console.log(repos)
-            setRepos(repos)
-        })
-        .catch(error => console.error(error))
-    }, [])
+    const searchString = `https://api.github.com/users/${repoName}/repos`;
+    const { repos, error, loading} = useFetch(searchString)
+
+    if (loading) return <h1>...Loading</h1>;
+
+    const onClick = (event: React.MouseEvent<HTMLElement>) => {
+        setRepoName(searchText);
+    }
 
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setRepoName(event.currentTarget.value)
+        setSearchText(event.currentTarget.value);
     }
 
     return (
-        <div className='header-container'>
-            <div className='header-title'>
-                <Typography variant='h2'>Git Hub Viewer</Typography>
-            </div>
             <div>
-                <TextField 
-                    id="outlined-basic" 
-                    variant="outlined" 
-                    className='classes.input-box' 
-                    label="Repo Owner" 
-                    value={repoName}
-                    onChange={onChange}
-                />
+            {error ? <h1>{`An error has occured: ${error}`}</h1>
+                :
+                <div className='header-container'>
+                    <div className='header-title'>
+                        <Typography variant='h2'>Git Hub Viewer</Typography>
+                    </div>
+                    <Stack spacing={2} direction="column">
+                        <TextField 
+                            id="outlined-basic" 
+                            variant="outlined" 
+                            className='classes.input-box' 
+                            label="Repo Owner" 
+                            value={searchText}
+                            onChange={onChange}
+                        />
+                        <Button variant="outlined" onClick={onClick}>Search</Button>
+                    </Stack>
+                    <RepoList repos={repos} /> 
+                </div>}
             </div>
-            <div>
-                <Button>Search</Button>
-            </div>
-            <RepoList repos={repos} />
-        </div>
     )
 }
 
