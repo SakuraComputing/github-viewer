@@ -9,12 +9,14 @@ interface RepoListProps {
 
 const columns: GridColDef[] = [
     { field: 'name', headerName: 'Repo Name', width: 250 },
-    { field: 'stargazers_count', headerName: 'Stars', width: 30 },
-    { field: 'forks', headerName: 'Forks', width: 30 },
+    { field: 'full_name', headerName: 'Owner', width: 150 },
+
     {
       field: 'clone_url',
       headerName: 'Repo Link',
-      width: 290
+      width: 290,
+      renderCell: (params) => 
+      <a href={`${params.row.clone_url}`} target='_blank' rel="noreferrer">{params.row.clone_url}</a>,
     }
 ];
 
