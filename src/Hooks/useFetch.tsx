@@ -22,7 +22,18 @@ function useFetch(url: string) {
     });
   }, [url]);
 
-  return { repos, loading, error };
+  const filterRepos = (filterText: string) => {
+    //   const test = repos.filter(repo => repo.name === filterText);
+      let test = repos.filter(repo => repo.name.includes(filterText));
+
+      if (test.length > 0) setRepos(test); 
+
+      console.log('Repos ', test.length)
+
+      return test;
+  };
+
+  return { repos, loading, error, filterRepos };
 }
 
 export default useFetch;

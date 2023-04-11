@@ -13,7 +13,6 @@ const RepoList: React.FC<RepoListProps> = ({repos}) => {
                     <div className='wrapper'>
                         <div>{repo.name}</div>
                         <div>{repo.stars}</div>
-                        <div>{repo.htmlUrl}</div>
                         <div>{repo.forks}</div>
                     </div>
                 )
