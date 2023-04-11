@@ -2,7 +2,6 @@ export default interface IRepo {
     name: string;
     forks: number;
     stars: number;
-    htmlUrl: string;
 }
 
 export default interface IRepos {

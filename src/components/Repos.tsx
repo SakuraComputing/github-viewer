@@ -7,14 +7,20 @@ const Main: React.FC = () => {
 
     const [ repoName, setRepoName ] = useState('');
     const [ searchText, setSearchText] = useState('');
+    const [ filterText, setFilterText] = useState('');
 
     const searchString = `https://api.github.com/users/${repoName}/repos`;
-    const { repos, error, loading} = useFetch(searchString)
+    const { repos, error, loading, filteredRepos, filterRepos } = useFetch(searchString)
 
-    if (loading) return <h1>...Loading</h1>;
+    if (loading) return <Typography variant="h2">...Loading</Typography>;
 
     const onClick = (event: React.MouseEvent<HTMLElement>) => {
         setRepoName(searchText);
+    }
+
+    const onChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterText(event.target.value);
+        filterRepos(event.target.value);
     }
 
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -39,8 +45,14 @@ const Main: React.FC = () => {
                             onChange={onChange}
                         />
                         <Button variant="outlined" onClick={onClick}>Search</Button>
+                        <TextField
+                            variant="outlined"
+                            label="filter"
+                            value={filterText}
+                            onChange={onChangeFilter}
+                        />
                     </Stack>
-                    <RepoList repos={repos} /> 
+                    {filteredRepos.length > 0 ? <RepoList repos={filteredRepos} /> : <RepoList repos={repos} />} 
                 </div>}
             </div>
     )

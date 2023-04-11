@@ -5,6 +5,7 @@ function useFetch(url: string) {
   const [repos, setRepos] = useState<Array<IRepos>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [filteredRepos, setFilteredRepos] = useState<Array<IRepos>>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +23,15 @@ function useFetch(url: string) {
     });
   }, [url]);
 
-  return { repos, loading, error };
+  const filterRepos = (filterText: string) => {
+      let filterRepos = repos.filter(repo => repo.name.includes(filterText));
+
+      setFilteredRepos(filterRepos); 
+
+      return filteredRepos;
+  };
+
+  return { repos, loading, error, filteredRepos, filterRepos };
 }
 
 export default useFetch;
