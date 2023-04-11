@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Typography, Stack} from '@mui/material';
 import RepoList from './RepoList';
 import useFetch from '../Hooks/useFetch';
@@ -10,9 +10,9 @@ const Main: React.FC = () => {
     const [ filterText, setFilterText] = useState('');
 
     const searchString = `https://api.github.com/users/${repoName}/repos`;
-    const { repos, error, loading, filterRepos } = useFetch(searchString)
+    const { repos, error, loading, filteredRepos, filterRepos } = useFetch(searchString)
 
-    if (loading) return <h1>...Loading</h1>;
+    if (loading) return <Typography variant="h2">...Loading</Typography>;
 
     const onClick = (event: React.MouseEvent<HTMLElement>) => {
         setRepoName(searchText);
@@ -52,7 +52,7 @@ const Main: React.FC = () => {
                             onChange={onChangeFilter}
                         />
                     </Stack>
-                    <RepoList repos={repos} /> 
+                    {filteredRepos.length > 0 ? <RepoList repos={filteredRepos} /> : <RepoList repos={repos} />} 
                 </div>}
             </div>
     )
